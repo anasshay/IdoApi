@@ -76,7 +76,7 @@ namespace IdoApi.Controllers
         }
       }
 
-      return NoContent();
+      return Ok(new { message = "Card has been edited successfully", user });
     }
 
     // POST: api/Users
@@ -110,7 +110,8 @@ namespace IdoApi.Controllers
       _context.Users.Remove(user);
       await _context.SaveChangesAsync();
 
-      return Ok();
+      //return json of user deleted with message
+      return Ok(new { message = "User deleted successfully" });
     }
 
     private bool UserExists(int id)

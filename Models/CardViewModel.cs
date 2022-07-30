@@ -7,7 +7,5 @@ namespace IdoApi.Models
 {
     public class CardViewModel : CardModel
     {
-        public ImportanceModel? Importance { get; set; }
-        public StateModel? State { get; set; }
     }
 }

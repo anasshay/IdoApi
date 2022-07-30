@@ -10,7 +10,6 @@ namespace IdoApi.Models
     public string Title { get; set; } = string.Empty;
 
     [Required]
-    [DataType(DataType.Date)]
     public string Category { get; set; } = string.Empty;
 
     [Required]
@@ -23,9 +22,14 @@ namespace IdoApi.Models
 
     [Required]
     public int ImportanceId { get; set; }
+    public ImportanceModel? Importance { get; set; }
+    
     [Required]
     public int StateId { get; set; }
+    public StateModel? State { get; set; }
+
     [Required]
     public int UserId { get; set; }
+    public UserModel? User { get; set; }
   }
 }

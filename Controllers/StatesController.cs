@@ -9,115 +9,116 @@ using IdoApi.Models;
 
 namespace IdoApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class StatesController : ControllerBase
+  [Route("api/[controller]")]
+  [ApiController]
+  public class StatesController : ControllerBase
+  {
+    private readonly IdoContext _context;
+
+    public StatesController(IdoContext context)
     {
-        private readonly IdoContext _context;
-
-        public StatesController(IdoContext context)
-        {
-            _context = context;
-        }
-
-        // GET: api/States
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<StateModel>>> GetState()
-        {
-          if (_context.State == null)
-          {
-              return NotFound();
-          }
-            return await _context.State.ToListAsync();
-        }
-
-        // GET: api/States/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<StateModel>> GetState(int id)
-        {
-          if (_context.State == null)
-          {
-              return NotFound();
-          }
-            var state = await _context.State.FindAsync(id);
-
-            if (state == null)
-            {
-                return NotFound();
-            }
-
-            return state;
-        }
-
-        // PUT: api/States/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutState(int id, StateModel state)
-        {
-            if (id != state.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(state).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StateExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/States
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<StateModel>> PostState(StateModel state)
-        {
-          if (_context.State == null)
-          {
-              return Problem("Entity set 'IdoContext.State'  is null.");
-          }
-            _context.State.Add(state);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetState", new { id = state.Id }, state);
-        }
-
-        // DELETE: api/States/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteState(int id)
-        {
-            if (_context.State == null)
-            {
-                return NotFound();
-            }
-            var state = await _context.State.FindAsync(id);
-            if (state == null)
-            {
-                return NotFound();
-            }
-
-            _context.State.Remove(state);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool StateExists(int id)
-        {
-            return (_context.State?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+      _context = context;
     }
+
+    // GET: api/States
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<StateModel>>> GetState()
+    {
+      if (_context.State == null)
+      {
+        return NotFound();
+      }
+      return await _context.State.ToListAsync();
+    }
+
+    // GET: api/States/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<StateModel>> GetState(int id)
+    {
+      if (_context.State == null)
+      {
+        return NotFound();
+      }
+      var state = await _context.State.FindAsync(id);
+
+      if (state == null)
+      {
+        return NotFound();
+      }
+
+      return state;
+    }
+
+    // PUT: api/States/5
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutState(int id, [FromForm] StateModel state)
+    {
+      if (id != state.Id)
+      {
+        return BadRequest();
+      }
+
+      _context.Entry(state).State = EntityState.Modified;
+
+      try
+      {
+        await _context.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!StateExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+
+      return Ok(new { message = "Card has been edited successfully", state });
+    }
+
+    // POST: api/States
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPost]
+    public async Task<ActionResult<StateModel>> PostState([FromForm] StateModel state)
+    {
+      if (_context.State == null)
+      {
+        return Problem("Entity set 'IdoContext.State'  is null.");
+      }
+      _context.State.Add(state);
+      await _context.SaveChangesAsync();
+
+      return CreatedAtAction("GetState", new { id = state.Id }, state);
+    }
+
+    // DELETE: api/States/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteState(int id)
+    {
+      if (_context.State == null)
+      {
+        return NotFound();
+      }
+      var state = await _context.State.FindAsync(id);
+      if (state == null)
+      {
+        return NotFound();
+      }
+
+      _context.State.Remove(state);
+      await _context.SaveChangesAsync();
+
+      return Ok(new { message = "State deleted successfully" });
+
+    }
+
+    private bool StateExists(int id)
+    {
+      return (_context.State?.Any(e => e.Id == id)).GetValueOrDefault();
+    }
+  }
 }
