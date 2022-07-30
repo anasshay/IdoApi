@@ -2,27 +2,30 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IdoApi.Models
 {
-  public class Card
+  public class CardModel
   {
     public int Id { get; set; }
 
     [Required]
-    public string? Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [Required]
     [DataType(DataType.Date)]
-    public DateTime? Category { get; set; }
+    public string Category { get; set; } = string.Empty;
 
     [Required]
     [DataType(DataType.Date)]
-    public DateTime? DueDate { get; set; }
+    public DateTime? DueDate { get; set; } = DateTime.Now;
 
     [Required]
     [DataType(DataType.Duration)]
-    public string? Estimate { get; set; }
+    public string Estimate { get; set; } = string.Empty;
 
     [Required]
     public int ImportanceId { get; set; }
+    [Required]
     public int StateId { get; set; }
+    [Required]
+    public int UserId { get; set; }
   }
 }

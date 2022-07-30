@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
+using IdoApi.Models;
 
 namespace IdoApi.Models
 {
@@ -10,6 +11,12 @@ namespace IdoApi.Models
         {
         }
 
-        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<UserModel> Users { get; set; } = null!;
+
+        public DbSet<IdoApi.Models.StateModel>? State { get; set; }
+
+        public DbSet<IdoApi.Models.ImportanceModel>? ImportanceModel { get; set; }
+
+        public DbSet<IdoApi.Models.CardModel>? CardModel { get; set; }
     }
 }

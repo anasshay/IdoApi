@@ -22,7 +22,7 @@ namespace IdoApi.Controllers
 
     // GET: api/Users
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+    public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
     {
       if (_context.Users == null)
       {
@@ -33,7 +33,7 @@ namespace IdoApi.Controllers
 
     // GET: api/Users/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUser(int id)
+    public async Task<ActionResult<UserModel>> GetUser(int id)
     {
       if (_context.Users == null)
       {
@@ -51,7 +51,7 @@ namespace IdoApi.Controllers
 
     // PUT: api/Users/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutUser(int id, [FromForm] User user)
+    public async Task<IActionResult> PutUser(int id, [FromForm] UserModel user)
     {
       if (id != user.Id)
       {
@@ -81,7 +81,7 @@ namespace IdoApi.Controllers
 
     // POST: api/Users
     [HttpPost]
-    public async Task<ActionResult<User>> PostUser([FromForm] User user)
+    public async Task<ActionResult<UserModel>> PostUser([FromForm] UserModel user)
     {
       if (_context.Users == null)
       {

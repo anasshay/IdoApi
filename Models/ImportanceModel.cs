@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 
 namespace IdoApi.Models
 {
-  public class Importance
+  public class ImportanceModel
   {
     public int Id { get; set; }
 
     [Required]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
   }
 }

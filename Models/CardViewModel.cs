@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace IdoApi.Models
 {
-    public class CardViewModel : Card
+    public class CardViewModel : CardModel
     {
-        public Importance? Importance { get; set; }
-        public State? State { get; set; }
+        public ImportanceModel? Importance { get; set; }
+        public StateModel? State { get; set; }
     }
 }
