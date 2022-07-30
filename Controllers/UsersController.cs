@@ -41,12 +41,67 @@ namespace IdoApi.Controllers
       }
       var user = await _context.Users.FindAsync(id);
 
+      // var userX = _context.Users.Include(s => s.Cards).Include(s => s.Importances)
+
+      // var userX = await (from u in _context.Users
+      //                    where u.Id == id
+      //                    select new UserModel
+      //                    {
+      //                      Id = u.Id,
+      //                      Email = u.Email,
+      //                      Password = u.Password,
+      //                      Photo = u.Photo,
+      //                      Cards = (from card in _context.Cards
+      //                               where card.UserId == id
+      //                               select new CardModel
+      //                               {
+      //                                 Id = card.Id,
+      //                                 Title = card.Title,
+      //                                 Importance = card.Importance,
+      //                                 UserId = card.UserId,
+      //                               }).ToList()
+      //                    }).FirstOrDefaultAsync();
+
+      var userX = await _context.Users.Where(u => u.Id == id).Include(c => c.Cards).ToListAsync();
+
+
+      //   card?.Select(s => new CardModel
+      //   {
+      //     Id = s.Id,
+      //     Importance = s.Importance,
+      //     ImportanceId = s.Importance.Id,
+      //     prefix = s.prefix,
+      //     StateId = s.StateId,
+      //   }).ToList(),
+      // }).FirstOrDefaultAsync();
+
+
+
       if (user == null)
       {
         return NotFound();
       }
 
-      return user;
+      // get all cards of this user
+      var cards = await _context.Cards.Where(c => c.UserId == id).ToListAsync();
+
+      // get the importance of each card
+      foreach (var card in cards)
+      {
+        var importance = await _context.Importances.FindAsync(card.ImportanceId);
+        card.Importance = importance;
+      }
+
+      // get the state for each card
+      foreach (var card in cards)
+      {
+        var state = await _context.States.FindAsync(card.StateId);
+        card.prefix = state;
+      }
+
+      user.Cards = cards;
+
+      return Ok(userX);
     }
 
     // PUT: api/Users/5

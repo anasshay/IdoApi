@@ -28,7 +28,24 @@ namespace IdoApi.Controllers
       {
         return NotFound();
       }
-      return await _context.Cards.ToListAsync();
+
+      var cards = await _context.Cards.ToListAsync();
+
+      // get the importance of each card
+      foreach (var card in cards)
+      {
+        var importance = await _context.Importances.FindAsync(card.ImportanceId);
+        card.Importance = importance;
+      }
+
+      // get the state for each card
+      foreach (var card in cards)
+      {
+        var state = await _context.States.FindAsync(card.StateId);
+        card.prefix = state;
+      }
+
+      return cards;
     }
 
     // GET: api/Cards/5
@@ -45,6 +62,14 @@ namespace IdoApi.Controllers
       {
         return NotFound();
       }
+
+      // get the importance of this card
+      var importance = await _context.Importances.FindAsync(cardModel.ImportanceId);
+      cardModel.Importance = importance;
+
+      // get the state of this card
+      var state = await _context.States.FindAsync(cardModel.StateId);
+      cardModel.prefix = state;
 
       return cardModel;
     }

@@ -26,10 +26,9 @@ namespace IdoApi.Models
     
     [Required]
     public int StateId { get; set; }
-    public StateModel? State { get; set; }
+    public StateModel? prefix { get; set; }
 
     [Required]
     public int UserId { get; set; }
-    public UserModel? User { get; set; }
   }
 }

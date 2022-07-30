@@ -3,6 +3,7 @@ using System;
 using IdoApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IdoApi.Migrations
 {
     [DbContext(typeof(IdoContext))]
-    partial class IdoContextModelSnapshot : ModelSnapshot
+    [Migration("20220730133340_InitialCreate2")]
+    partial class InitialCreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.7");
@@ -51,16 +53,13 @@ namespace IdoApi.Migrations
                     b.Property<int?>("UserModelId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("prefixId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ImportanceId");
 
-                    b.HasIndex("UserModelId");
+                    b.HasIndex("StateId");
 
-                    b.HasIndex("prefixId");
+                    b.HasIndex("UserModelId");
 
                     b.ToTable("Cards");
                 });
@@ -126,17 +125,19 @@ namespace IdoApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("IdoApi.Models.StateModel", "State")
+                        .WithMany()
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("IdoApi.Models.UserModel", null)
                         .WithMany("Cards")
                         .HasForeignKey("UserModelId");
 
-                    b.HasOne("IdoApi.Models.StateModel", "prefix")
-                        .WithMany()
-                        .HasForeignKey("prefixId");
-
                     b.Navigation("Importance");
 
-                    b.Navigation("prefix");
+                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("IdoApi.Models.UserModel", b =>

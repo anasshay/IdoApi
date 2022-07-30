@@ -4,6 +4,7 @@ namespace IdoApi.Models
 {
   public class UserModel
   {
+
     public int Id { get; set; }
 
     [Required]
@@ -14,5 +15,8 @@ namespace IdoApi.Models
     public string Password { get; set; } = string.Empty;
 
     public string Photo { get; set; } = string.Empty;
+
+    // get all cards of this user
+    public ICollection<CardModel> Cards { get; set; }
   }
 }
