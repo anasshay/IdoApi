@@ -24,22 +24,22 @@ namespace IdoApi.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ImportanceModel>>> GetImportanceModel()
     {
-      if (_context.ImportanceModel == null)
+      if (_context.Importances == null)
       {
         return NotFound();
       }
-      return await _context.ImportanceModel.ToListAsync();
+      return await _context.Importances.ToListAsync();
     }
 
     // GET: api/Importances/5
     [HttpGet("{id}")]
     public async Task<ActionResult<ImportanceModel>> GetImportanceModel(int id)
     {
-      if (_context.ImportanceModel == null)
+      if (_context.Importances == null)
       {
         return NotFound();
       }
-      var importanceModel = await _context.ImportanceModel.FindAsync(id);
+      var importanceModel = await _context.Importances.FindAsync(id);
 
       if (importanceModel == null)
       {
@@ -85,11 +85,11 @@ namespace IdoApi.Controllers
     [HttpPost]
     public async Task<ActionResult<ImportanceModel>> PostImportanceModel([FromForm] ImportanceModel importanceModel)
     {
-      if (_context.ImportanceModel == null)
+      if (_context.Importances == null)
       {
         return Problem("Entity set 'IdoContext.ImportanceModel'  is null.");
       }
-      _context.ImportanceModel.Add(importanceModel);
+      _context.Importances.Add(importanceModel);
       await _context.SaveChangesAsync();
 
       return CreatedAtAction("GetImportanceModel", new { id = importanceModel.Id }, importanceModel);
@@ -99,17 +99,17 @@ namespace IdoApi.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteImportanceModel(int id)
     {
-      if (_context.ImportanceModel == null)
+      if (_context.Importances == null)
       {
         return NotFound();
       }
-      var importanceModel = await _context.ImportanceModel.FindAsync(id);
+      var importanceModel = await _context.Importances.FindAsync(id);
       if (importanceModel == null)
       {
         return NotFound();
       }
 
-      _context.ImportanceModel.Remove(importanceModel);
+      _context.Importances.Remove(importanceModel);
       await _context.SaveChangesAsync();
 
       return Ok(new { message = "Importance deleted successfully" });
@@ -118,7 +118,7 @@ namespace IdoApi.Controllers
 
     private bool ImportanceModelExists(int id)
     {
-      return (_context.ImportanceModel?.Any(e => e.Id == id)).GetValueOrDefault();
+      return (_context.Importances?.Any(e => e.Id == id)).GetValueOrDefault();
     }
   }
 }

@@ -24,22 +24,22 @@ namespace IdoApi.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CardModel>>> GetCardModel()
     {
-      if (_context.CardModel == null)
+      if (_context.Cards == null)
       {
         return NotFound();
       }
-      return await _context.CardModel.ToListAsync();
+      return await _context.Cards.ToListAsync();
     }
 
     // GET: api/Cards/5
     [HttpGet("{id}")]
     public async Task<ActionResult<CardModel>> GetCardModel(int id)
     {
-      if (_context.CardModel == null)
+      if (_context.Cards == null)
       {
         return NotFound();
       }
-      var cardModel = await _context.CardModel.FindAsync(id);
+      var cardModel = await _context.Cards.FindAsync(id);
 
       if (cardModel == null)
       {
@@ -85,11 +85,11 @@ namespace IdoApi.Controllers
     [HttpPost]
     public async Task<ActionResult<CardModel>> PostCardModel([FromForm] CardModel cardModel)
     {
-      if (_context.CardModel == null)
+      if (_context.Cards == null)
       {
         return Problem("Entity set 'IdoContext.CardModel'  is null.");
       }
-      _context.CardModel.Add(cardModel);
+      _context.Cards.Add(cardModel);
       await _context.SaveChangesAsync();
 
       return CreatedAtAction("GetCardModel", new { id = cardModel.Id }, cardModel);
@@ -99,17 +99,17 @@ namespace IdoApi.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCardModel(int id)
     {
-      if (_context.CardModel == null)
+      if (_context.Cards == null)
       {
         return NotFound();
       }
-      var cardModel = await _context.CardModel.FindAsync(id);
+      var cardModel = await _context.Cards.FindAsync(id);
       if (cardModel == null)
       {
         return NotFound();
       }
 
-      _context.CardModel.Remove(cardModel);
+      _context.Cards.Remove(cardModel);
       await _context.SaveChangesAsync();
 
       return Ok(new { message = "Card deleted successfully" });
@@ -118,7 +118,7 @@ namespace IdoApi.Controllers
 
     private bool CardModelExists(int id)
     {
-      return (_context.CardModel?.Any(e => e.Id == id)).GetValueOrDefault();
+      return (_context.Cards?.Any(e => e.Id == id)).GetValueOrDefault();
     }
   }
 }

@@ -24,22 +24,22 @@ namespace IdoApi.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<StateModel>>> GetState()
     {
-      if (_context.State == null)
+      if (_context.States == null)
       {
         return NotFound();
       }
-      return await _context.State.ToListAsync();
+      return await _context.States.ToListAsync();
     }
 
     // GET: api/States/5
     [HttpGet("{id}")]
     public async Task<ActionResult<StateModel>> GetState(int id)
     {
-      if (_context.State == null)
+      if (_context.States == null)
       {
         return NotFound();
       }
-      var state = await _context.State.FindAsync(id);
+      var state = await _context.States.FindAsync(id);
 
       if (state == null)
       {
@@ -85,11 +85,11 @@ namespace IdoApi.Controllers
     [HttpPost]
     public async Task<ActionResult<StateModel>> PostState([FromForm] StateModel state)
     {
-      if (_context.State == null)
+      if (_context.States == null)
       {
         return Problem("Entity set 'IdoContext.State'  is null.");
       }
-      _context.State.Add(state);
+      _context.States.Add(state);
       await _context.SaveChangesAsync();
 
       return CreatedAtAction("GetState", new { id = state.Id }, state);
@@ -99,17 +99,17 @@ namespace IdoApi.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteState(int id)
     {
-      if (_context.State == null)
+      if (_context.States == null)
       {
         return NotFound();
       }
-      var state = await _context.State.FindAsync(id);
+      var state = await _context.States.FindAsync(id);
       if (state == null)
       {
         return NotFound();
       }
 
-      _context.State.Remove(state);
+      _context.States.Remove(state);
       await _context.SaveChangesAsync();
 
       return Ok(new { message = "State deleted successfully" });
@@ -118,7 +118,7 @@ namespace IdoApi.Controllers
 
     private bool StateExists(int id)
     {
-      return (_context.State?.Any(e => e.Id == id)).GetValueOrDefault();
+      return (_context.States?.Any(e => e.Id == id)).GetValueOrDefault();
     }
   }
 }

@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<IdoContext>(opt =>
-    opt.UseInMemoryDatabase("Ido"));
+    opt.UseSqlite(builder.Configuration.GetConnectionString("IdoContext")));
 //builder.Services.AddSwaggerGen(c =>
 //{
 //    c.SwaggerDoc("v1", new() { Title = "TodoApi", Version = "v1" });
