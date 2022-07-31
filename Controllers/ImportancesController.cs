@@ -77,7 +77,7 @@ namespace IdoApi.Controllers
         }
       }
 
-      return Ok(new { message = "Card has been edited successfully", importanceModel });
+      return Ok(new { message = "Importance has been edited successfully", importanceModel });
     }
 
     // POST: api/Importances

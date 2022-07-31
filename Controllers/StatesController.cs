@@ -77,7 +77,7 @@ namespace IdoApi.Controllers
         }
       }
 
-      return Ok(new { message = "Card has been edited successfully", state });
+      return Ok(new { message = "State has been edited successfully", state });
     }
 
     // POST: api/States

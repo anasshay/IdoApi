@@ -19,6 +19,10 @@ namespace IdoApi.Models
     [Required]
     [DataType(DataType.Duration)]
     public string Estimate { get; set; } = string.Empty;
+    [Required]
+    public string EstimateUnit { get; set; } = string.Empty;
+
+
 
     [Required]
     public int ImportanceId { get; set; }
