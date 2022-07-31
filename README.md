@@ -5,4 +5,4 @@
 #### cd to application directory
 #### run `dotnet restore`
 #### run `dotnet run`
-#### after the running of the backend, navigate to the frontend application and run it
+#### after the running of the backend, navigate to the frontend application and run it : https://github.com/anasshay/Idofront
